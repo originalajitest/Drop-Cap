@@ -7,15 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Microsoft.Office.Interop.Word;
 
 namespace Drop_VC
 {
     public partial class Ribbon1
     {
 
-        string content = "table of content";
+        //string content = "table of content";
         int cutOff = 13;
-        string fontReq = "";
+        bool fontReq = false;
+        bool[] fontReqStat;
+        string fontReq1 = "";
+        string fontReq2 = "";
+        string fontReq3 = "";
+        string fontReq4 = "";
         bool div = false;
         int lineDropped = 3;
         int wDmargin = 1;
@@ -23,12 +29,22 @@ namespace Drop_VC
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            titleFont.Text = "";
+            titleFont1.Text = "";
+            titleFont2.Text = "";
+            titleFont3.Text = "";
+            titleFont4.Text = "";
             titleSize.SelectedItemIndex = 12;
             divider.Checked = false;
             fontDrop.Text = "";
             lineDrop.SelectedItemIndex = 2;
             margin.Checked = false;
+
+
+            fontReqStat = new bool[4];
+            for (int i = 0; i < 4; i++)
+            {
+                fontReqStat[i] = false;
+            }
         }
 
         // Main drop function
@@ -38,13 +54,15 @@ namespace Drop_VC
             Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
             Word.Paragraphs paras = doc.Paragraphs;
 
+            //MessageBox.Show(paras[1].Range.Font.Name);
+
             int i = 1, skip;
             bool drop = false;
             string txt, rep;
 
             while (true)
             {
-                if (paras[i].Range.Text.Length > 1)
+                if (paras[i].Range.Text.Length > 7) // 7 to allow for footers and other special stuff that cant be dropped
                 {
                     if (isTitle(paras[i]))
                     {
@@ -60,6 +78,7 @@ namespace Drop_VC
                         */
 
                         drop = true;
+
                         if (div) i++;
 
                     }
@@ -119,6 +138,7 @@ namespace Drop_VC
                 //MessageBox.Show("i: " + i + " Char: " + txt[i] + " Int: " + (int)txt[i] + " Used Int: " + temp);
                 if (temp >= 65 && temp <= 90) break;
                 i++;
+                if (i == txt.Length) return 0;
             }
             return i;
         }
@@ -128,19 +148,30 @@ namespace Drop_VC
         {
 
             string txt = para.Range.Text;
-            
-            if (txt.ToLower().Contains(content)) return false;// Is table of content
+
+            //if (txt.ToLower().Contains(content)) return false;// Is table of content
+            // Had to remove table of content as it broke when multiple font check
+            // Drop was passed along until it ended on table of content
+
+            /*
+            int style = (int) ((WdBuiltinStyle) para.get_Style());// Is breaking
+            if (style == -2 || style == -3 || style == -63 || (style >= -28 && style <= -20)) return true;
+            */
 
             int size = (int) para.Range.Font.Size;
 
-            if (fontReq != "")
+            if (size >= cutOff)
             {
-                if (para.Range.Font.Name.Contains(fontReq))
+                if (fontReq)
                 {
-                    return (size >= cutOff);
+                    if (fontReqStat[0] && para.Range.Font.Name.Contains(fontReq1)) return true;
+                    if (fontReqStat[1] && para.Range.Font.Name.Contains(fontReq2)) return true;
+                    if (fontReqStat[2] && para.Range.Font.Name.Contains(fontReq3)) return true;
+                    if (fontReqStat[3] && para.Range.Font.Name.Contains(fontReq4)) return true;
+                    return false;
                 }
-                else return false;
-            } else if (size >= cutOff) return true;
+                else return true;
+            }
 
             //MessageBox.Show("Size is " + size + " Cutoff is " + cutOff);
             return false;
@@ -151,11 +182,12 @@ namespace Drop_VC
         // Does the Drop Cap
         private void dropTxt(Word.Paragraph para)
         {
+            //MessageBox.Show(para.Range.Text);
             Word.DropCap dropCap = para.DropCap;
-            if (fontDropped != "") dropCap.FontName = fontDropped;
             dropCap.Position = (Word.WdDropPosition) wDmargin;
             dropCap.LinesToDrop = lineDropped;
             dropCap.DistanceFromText = 1;
+            if (fontDropped != "") dropCap.FontName = fontDropped;
             dropCap.Enable();
         }
 
@@ -174,7 +206,7 @@ namespace Drop_VC
             while (true)
             {
                 // At 1 it does it for all page number and that breaks as they cannot have dropCap
-                if (paras[i].Range.Text.Length > 10)
+                if (paras[i].Range.Text.Length > 7)
                 {
                     //MessageBox.Show("Paragraph " + i + ". With length " + paras[i].Range.Text.Length);
                     dropCap = paras[i].DropCap;
@@ -186,12 +218,47 @@ namespace Drop_VC
 
         }
 
+        private void fontUpdater()
+        {
+            if (fontReqStat[0] || fontReqStat[1] || fontReqStat[2] || fontReqStat[3]) fontReq = true;
+            else fontReq = false;
+            //if (fontReq)MessageBox.Show("True");
+            //else MessageBox.Show("False");
+        }
+
 
         // Title function
-        private void titleFont_Change(object sender, RibbonControlEventArgs e)
+        private void titleFont1_Change(object sender, RibbonControlEventArgs e)
         {
-            RibbonEditBox obj = (RibbonEditBox) sender;
-            fontReq = obj.Text;
+            RibbonEditBox obj = (RibbonEditBox)sender;
+            fontReq1 = obj.Text;
+            if (fontReq1 == "") fontReqStat[0] = false;
+            else fontReqStat[0] = true;
+            fontUpdater();
+        }
+        private void titleFont2_Change(object sender, RibbonControlEventArgs e)
+        {
+            RibbonEditBox obj = (RibbonEditBox)sender;
+            fontReq2 = obj.Text;
+            if (fontReq2 == "") fontReqStat[1] = false;
+            else fontReqStat[1] = true;
+            fontUpdater();
+        }
+        private void titleFont3_Change(object sender, RibbonControlEventArgs e)
+        {
+            RibbonEditBox obj = (RibbonEditBox)sender;
+            fontReq3 = obj.Text;
+            if (fontReq3 == "") fontReqStat[2] = false;
+            else fontReqStat[2] = true;
+            fontUpdater();
+        }
+        private void titleFont4_Change(object sender, RibbonControlEventArgs e)
+        {
+            RibbonEditBox obj = (RibbonEditBox)sender;
+            fontReq4 = obj.Text;
+            if (fontReq4 == "") fontReqStat[3] = false;
+            else fontReqStat[3] = true;
+            fontUpdater();
         }
 
         private void titleSize_change(object sender, RibbonControlEventArgs e)

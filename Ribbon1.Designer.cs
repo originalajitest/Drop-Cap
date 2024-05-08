@@ -74,7 +74,10 @@
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl38 = this.Factory.CreateRibbonDropDownItem();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.identifiers = this.Factory.CreateRibbonGroup();
-            this.titleFont = this.Factory.CreateRibbonEditBox();
+            this.titleFont1 = this.Factory.CreateRibbonEditBox();
+            this.titleFont2 = this.Factory.CreateRibbonEditBox();
+            this.titleFont3 = this.Factory.CreateRibbonEditBox();
+            this.titleFont4 = this.Factory.CreateRibbonEditBox();
             this.titleSize = this.Factory.CreateRibbonDropDown();
             this.divider = this.Factory.CreateRibbonCheckBox();
             this.main1 = this.Factory.CreateRibbonGroup();
@@ -101,19 +104,43 @@
             // 
             // identifiers
             // 
-            this.identifiers.Items.Add(this.titleFont);
+            this.identifiers.Items.Add(this.titleFont1);
+            this.identifiers.Items.Add(this.titleFont2);
+            this.identifiers.Items.Add(this.titleFont3);
+            this.identifiers.Items.Add(this.titleFont4);
             this.identifiers.Items.Add(this.titleSize);
             this.identifiers.Items.Add(this.divider);
             this.identifiers.Label = "Title Identifiers";
             this.identifiers.Name = "identifiers";
             // 
-            // titleFont
+            // titleFont1
             // 
-            this.titleFont.Label = "Font";
-            this.titleFont.Name = "titleFont";
-            this.titleFont.ScreenTip = "Title\'s Font will have to contain these characters";
-            this.titleFont.Text = null;
-            this.titleFont.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.titleFont_Change);
+            this.titleFont1.Label = "Font 1";
+            this.titleFont1.Name = "titleFont1";
+            this.titleFont1.ScreenTip = "Title\'s Font will have to contain these characters";
+            this.titleFont1.Text = null;
+            this.titleFont1.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.titleFont1_Change);
+            // 
+            // titleFont2
+            // 
+            this.titleFont2.Label = "Font 2";
+            this.titleFont2.Name = "titleFont2";
+            this.titleFont2.Text = null;
+            this.titleFont2.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.titleFont2_Change);
+            // 
+            // titleFont3
+            // 
+            this.titleFont3.Label = "Font 3";
+            this.titleFont3.Name = "titleFont3";
+            this.titleFont3.Text = null;
+            this.titleFont3.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.titleFont3_Change);
+            // 
+            // titleFont4
+            // 
+            this.titleFont4.Label = "Font 4";
+            this.titleFont4.Name = "titleFont4";
+            this.titleFont4.Text = null;
+            this.titleFont4.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.titleFont4_Change);
             // 
             // titleSize
             // 
@@ -291,10 +318,13 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup settings;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown titleSize;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox divider;
-        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox titleFont;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox titleFont1;
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox fontDrop;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown lineDrop;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox margin;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox titleFont2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox titleFont3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox titleFont4;
     }
 
     partial class ThisRibbonCollection
