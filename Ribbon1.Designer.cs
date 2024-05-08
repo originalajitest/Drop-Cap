@@ -227,7 +227,6 @@
             // 
             // drop
             // 
-            this.drop.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.drop.Image = global::Drop_VC.Properties.Resources.ico;
             this.drop.Label = "Auto Drop Cap";
             this.drop.Name = "drop";
@@ -237,7 +236,6 @@
             // 
             // rmv
             // 
-            this.rmv.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.rmv.Image = global::Drop_VC.Properties.Resources.rmcico;
             this.rmv.Label = "Remove Drop Cap";
             this.rmv.Name = "rmv";
