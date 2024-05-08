@@ -1,20 +1,50 @@
 # Drop-Cap
 
-### Description
+## Description
 <ul>
 	<li> This is a Word Add-in that helps automate adding drop cap to paragraphs below titles for stylized effect</li>
-	<li> It has been designed primarily to work on the windows version of Word, but might work on other versions, no gurantees though </li>
-	<li> To install and use, download the zip file and run the set-up inside it. It should show up in word immediately after.</li>
+	<li> It has been designed primarily to work on the windows version of Word, but might work on other versions like on mac and linux, but no gurantees though </li>
+	<li> To install and use, see below.</li>
 </ul>
 
-### Options Descriptions
+## Installing, Updating & Uninstalling
+
+<ul>
+	<li> <b>Installing</b>
+		<ol>
+			<li>Download the zip file from the master branch root</li>
+			<li>Extract it and run the setup.exe file</li>
+			<li>It should now be in word whenever you open word</li>
+			<li>Do not delete the folder which contains these files, it runs from there</li>
+		</ol>
+	</li>
+	<li> <b>Updating</b>
+		<ol>
+			<li>Download the same zip file from root</li>
+			<li>Extract it and locate the version that you want inside the folder ---</li>
+			<li>Take that version and paste it in the same folder as your current version (in folder ---)</li>
+			<li>Paste the .vsto file in the new version in the main folder replacing the one there</li>
+			<li>You can delete the old version if you want. Or you could simply uninstall and reinstall the new version</li>
+		</ol>
+	</li>
+	<li> <b>Uninstalling</b>
+		<ol>
+			<li>Open Control Panel from the start menu</li>
+			<li>Go to <i>Uninstall A Program</i> under <i>Programs</i></li>
+			<li>Locate the Program with the name <i>Drop-Cap-----</i></li>
+			<li>Right click it then click uninstall</li>
+		</ol>
+	</li>
+</ul>
+
+## Options Descriptions
 By default all descriptions are included in the tool tip for each element.
 <ul>
 	<li><b>Title Identifiers: </b> 
 		<ul>
 			<li><i>Font {1,2,3,4}:</i> Fonts of titles, all titles will be skipped and the first paragraph which is not a title will be formatted to have a Drop Cap. A blank input means that Font is not checked.</li>
 			<li><i>Size:</i> The Cut-off for the lowest size that a title can be, above this it will be a title unless there is a font specified which will hence be checked.</li>
-			<li><i>Divider:</i> Skips one paragraph after the title if checked to allow of a divider (----------) etc.</li>
+			<li><i>Divider:</i> Skips one paragraph after the title if checked to allow for a divider (----------) etc.</li>
 		</ul>
 	</li>
 	<li><b>Main: </b>
@@ -32,3 +62,9 @@ By default all descriptions are included in the tool tip for each element.
 	</li>
 </ul>
 
+## Using the Add-In
+
+<ul>
+	<li>H</il>
+	<li></il>
+</ul>
